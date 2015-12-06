@@ -1,6 +1,7 @@
 package com.spring.tutorial;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,24 +22,20 @@ public class MainApp {
 		
 		Timestamp ts = new Timestamp(new Date().getTime());
 		
-		Admin admin = new Admin();
-		admin.setCargo("gerente");
-		admin.setNombre("Martin");
-		admin.setFechaCreacion(ts);
-		
-		
 		
 		try {
-			admindao.save(admin);
-//			List<Admin> admins = admindao.findAll();
-//			for (Admin admin2 : admins) {
-//				System.out.println(admin2);
-//			}
-			System.out.println(admindao.findById(1));
-			System.out.println(admindao.findById(2));
-			System.out.println(admindao.findByNombre("j").toString());
+			List<Admin> admins = new ArrayList<Admin>();
 			
+			admins.add(new Admin(30, "pedro", "jefe de ingenieria", ts));
+			admins.add(new Admin(31, "jorge", "subjefe de ingenieria", ts));
+			admins.add(new Admin(32, "maria", "representante legal", ts));
 			
+			int[] vals = admindao.saveAll(admins);
+			
+			for (int i : vals) {
+				System.out.println("filas afectadas para esta operacion: " + i);
+			}
+					
 		} catch (CannotGetJdbcConnectionException ex) {
 			ex.printStackTrace();
 		}
